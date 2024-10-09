@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IBaseRepository } from './intefaces/base-repository.interface';
 import { Model } from '../models/base.model';
+import { STORAGE_KEY } from './storage-tokens';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageRepository<T extends Model> implements IBaseRepository<T> {
-  constructor(private storageKey: string) {}
+  constructor(@Inject(STORAGE_KEY) private storageKey: string) {}  // Usa @Inject para inyectar el token
 
   getAll(): Observable<T[]> {
     const data = localStorage.getItem(this.storageKey);
